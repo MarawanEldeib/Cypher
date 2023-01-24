@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "777164042128",
+    "firebase_url": "https://cypherflutter-4e3d3-default-rtdb.firebaseio.com",
+    "project_id": "cypherflutter-4e3d3",
+    "storage_bucket": "cypherflutter-4e3d3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:777164042128:android:abbc4713868fb549c14d15",
+        "android_client_info": {
+          "package_name": "com.example.cypherflutter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "777164042128-qmor0e0bmijeuibksd378e4hi54rgbtd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBj9Oq99OajhNrfi00W8Vbrv05p63WUWDY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "777164042128-qmor0e0bmijeuibksd378e4hi54rgbtd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
