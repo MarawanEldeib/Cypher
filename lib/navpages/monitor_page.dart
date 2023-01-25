@@ -1,9 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
-
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 
-
+import '../main.dart';
+import 'noti.dart';
 
 class monitorpage extends StatefulWidget {
   const monitorpage({Key? key}) : super(key: key);
@@ -22,7 +22,6 @@ class _monitorpageState extends State<monitorpage> {
   FirebaseDatabase database = FirebaseDatabase.instance;
   final user = FirebaseAuth.instance.currentUser!;
   DatabaseReference databaseRef = FirebaseDatabase.instance.ref();
-
 
   int? _distance;
   bool? _doorLocked;
@@ -84,6 +83,12 @@ class _monitorpageState extends State<monitorpage> {
       setState(() {
         _motion = event.snapshot.value.toString().parseBool();
       });
+      if (_motion == true) {
+        Noti.showBigTextNotification(
+            title: "Motion Detected",
+            body: "Someone at the front door",
+            fln: flutterLocalNotificationsPlugin,);
+      }
     });
   }
 

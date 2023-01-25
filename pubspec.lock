@@ -35,7 +35,7 @@ packages:
       name: args
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.3.1"
+    version: "2.3.2"
   async:
     dependency: transitive
     description:
@@ -78,27 +78,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.1"
-  cloud_functions:
-    dependency: "direct main"
-    description:
-      name: cloud_functions
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "4.0.7"
-  cloud_functions_platform_interface:
-    dependency: transitive
-    description:
-      name: cloud_functions_platform_interface
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "5.1.26"
-  cloud_functions_web:
-    dependency: transitive
-    description:
-      name: cloud_functions_web
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "4.3.15"
   collection:
     dependency: transitive
     description:
@@ -218,27 +197,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.2.1+19"
-  firebase_messaging:
-    dependency: "direct main"
-    description:
-      name: firebase_messaging
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "14.2.1"
-  firebase_messaging_platform_interface:
-    dependency: transitive
-    description:
-      name: firebase_messaging_platform_interface
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "4.2.10"
-  firebase_messaging_web:
-    dependency: transitive
-    description:
-      name: firebase_messaging_web
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "3.2.11"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -386,7 +344,7 @@ packages:
       name: json_annotation
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.7.0"
+    version: "4.8.0"
   line_icons:
     dependency: "direct main"
     description:
@@ -428,7 +386,7 @@ packages:
       name: local_auth_windows
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.4"
+    version: "1.0.5"
   matcher:
     dependency: transitive
     description:
@@ -601,35 +559,35 @@ packages:
       name: url_launcher
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "6.1.7"
+    version: "6.1.8"
   url_launcher_android:
     dependency: transitive
     description:
       name: url_launcher_android
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "6.0.22"
+    version: "6.0.23"
   url_launcher_ios:
     dependency: transitive
     description:
       name: url_launcher_ios
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "6.0.17"
+    version: "6.0.18"
   url_launcher_linux:
     dependency: transitive
     description:
       name: url_launcher_linux
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.0.1"
+    version: "3.0.2"
   url_launcher_macos:
     dependency: transitive
     description:
       name: url_launcher_macos
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.0.1"
+    version: "3.0.2"
   url_launcher_platform_interface:
     dependency: transitive
     description:
@@ -643,14 +601,14 @@ packages:
       name: url_launcher_web
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.13"
+    version: "2.0.14"
   url_launcher_windows:
     dependency: transitive
     description:
       name: url_launcher_windows
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.0.1"
+    version: "3.0.2"
   vector_math:
     dependency: transitive
     description:
