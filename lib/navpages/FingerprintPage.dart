@@ -78,9 +78,6 @@ class _FingerprintPageState extends State<FingerprintPage> {
   }
 
 
-
-
-
   void _deleteFingerprint(String profileKey, String fingerprintKey) async {
     // Get a reference to the fingerprint node using the profileKey and fingerprint key
     DatabaseReference fingerprintRef = FirebaseDatabase.instance

@@ -113,30 +113,60 @@ class _ProfileListPageState extends State<ProfileListPage> {
                         )),
                     child: Column(
                       children: [
-                        ListTile(
-                            title: Text(name),
-                            subtitle: ListView.builder(
-                                shrinkWrap: true,
-                                itemCount: fingerprints.length,
-                                itemBuilder: (context, index) {
-                                  return Text(fingerprints[index]);
-                                }),
-                            trailing: Column(children: [
-                              PopupMenuButton(
-                                itemBuilder: (context) => [
-                                  PopupMenuItem(
-                                    value: 'delete',
-                                    child: Text('Delete'),
-                                  ),
-                                ],
-                                onSelected: (value) {
-                                  if (value == 'delete') {
-                                    // Pass the profile key to the _deleteProfile method
-                                    _deleteProfile(key);
-                                  }
-                                },
-                              ),
-                            ]))
+                        Dismissible(
+                        key: UniqueKey(),
+                  direction: DismissDirection.endToStart,
+                  onDismissed: (direction) {
+                    // Show a confirmation dialog before deleting the profile
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: Text("Confirm deletion"),
+                          content: Text("Are you sure you want to delete this profile?"),
+                          actions: <Widget>[
+                            TextButton(
+                              child: Text("Cancel"),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                                setState(() {});
+                              },
+                            ),
+                            TextButton(
+                              child: Text("Delete"),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                                _deleteProfile(key);
+                              },
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  },
+                  background: Container(color: Colors.red),
+                  secondaryBackground: Container(
+                    color: Colors.red,
+                    child: Align(
+                        alignment: Alignment.centerRight,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: <Widget>[
+                            Icon(Icons.delete),
+                            Text("Deleting...")
+                          ],
+                        )),
+                  ),
+                  child: ListTile(
+                    title: Text(name),
+                    subtitle: ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: fingerprints.length,
+                        itemBuilder: (context, index) {
+                          return Text(fingerprints[index]);
+                        }),
+                  ),
+                )
                       ],
                     ));
               },
