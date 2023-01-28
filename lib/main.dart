@@ -15,7 +15,7 @@ FlutterLocalNotificationsPlugin();
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-
+  await NotificationController.initializeLocalNotifications();
   SystemChrome.setPreferredOrientations(
     [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown],
   );
@@ -39,7 +39,6 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState(){
     super.initState();
-    Noti.initialize(flutterLocalNotificationsPlugin);
   }
 
   @override

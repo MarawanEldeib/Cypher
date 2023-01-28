@@ -4,7 +4,6 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
 class AddFingerprintDialog extends StatefulWidget {
-
   @override
   _AddFingerprintDialogState createState() => _AddFingerprintDialogState();
 }
@@ -14,6 +13,7 @@ class _AddFingerprintDialogState extends State<AddFingerprintDialog> {
   final user = FirebaseAuth.instance.currentUser!;
   DatabaseReference databaseRef = FirebaseDatabase.instance.ref();
   int? _fingerprintId;
+  String _errorText = "";
 
   void _changeOptionBack(String profileKey) async {
     DatabaseReference optionRef = databaseRef.child(user.uid).child('option');
@@ -29,18 +29,33 @@ class _AddFingerprintDialogState extends State<AddFingerprintDialog> {
       },
       child: AlertDialog(
         title: Text('Add Fingerprint'),
-        content: TextField(
-          onChanged: (value) {
-            _fingerprintId = int.parse(value);
-          },
-          decoration: InputDecoration(
-            focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.lightGreen),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            TextField(
+              onChanged: (value) {
+                if (int.tryParse(value) != null &&
+                    int.parse(value) >= 1 &&
+                    int.parse(value) <= 127) {
+                  _fingerprintId = int.parse(value);
+                  _errorText = "";
+                } else {
+                  _fingerprintId = null;
+                  _errorText = "Please enter an integer between 1 and 127";
+                }
+                setState(() {});
+              },
+              decoration: InputDecoration(
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: Colors.lightGreen),
+                ),
+                border: OutlineInputBorder(),
+                labelText: 'Enter Fingerprint ID',
+                labelStyle: TextStyle(color: Colors.black),
+                errorText: _errorText,
+              ),
             ),
-            border: OutlineInputBorder(),
-            labelText: 'Enter Fingerprint ID',
-            labelStyle: TextStyle(color: Colors.black),
-          ),
+          ],
         ),
         actions: <Widget>[
           TextButton(

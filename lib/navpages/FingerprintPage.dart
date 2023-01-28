@@ -34,21 +34,52 @@ class _FingerprintPageState extends State<FingerprintPage> {
     _isOptionChanged = true;
   }
 
-  void _addFingerprint(
-      String profileKey, int fingerprint, Function callback) async {
+  void _addFingerprint(String profileKey, int fingerprint, Function callback) async {
+    DatabaseReference profilesRef = databaseRef.child(user.uid).child('profiles');
+    final DatabaseEvent event = await profilesRef.once();
+    final DataSnapshot snapshot = event.snapshot;
+    Map<dynamic, dynamic>? profiles = snapshot.value as Map?;
+    if (profiles != null) {
+      for (var profile in profiles.values) {
+        if(profile['fingerprints']!= null) {
+          for (var fp in profile['fingerprints'].values) {
+            if (fp == fingerprint) {
+              //fingerprint already exists
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: Text("Error"),
+                    content: Text("Fingerprint already exists"),
+                    actions: <Widget>[
+                      TextButton(
+                        child: Text("OK"),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                    ],
+                  );
+                },
+              );
+              return;
+            }
+          }
+        }
+      }
+    }
     // Generate a unique key for the new fingerprint node
-    DatabaseReference fingerprintRef = databaseRef
-        .child(user.uid)
-        .child('profiles')
-        .child(profileKey)
-        .child('fingerprints')
-        .push();
+    DatabaseReference fingerprintsRef = databaseRef.child(user.uid).child('profiles').child(profileKey).child('fingerprints');
+    DatabaseReference fingerprintRef = fingerprintsRef.push();
     // Use the generated key to set the value of the fingerprint id
     fingerprintRef.set(fingerprint);
-    databaseRef.child(user.uid).child("id").set(fingerprint);
     var fingerprintKey = fingerprintRef.key;
     callback(fingerprintKey);
   }
+
+
+
+
 
   void _deleteFingerprint(String profileKey, String fingerprintKey) async {
     // Get a reference to the fingerprint node using the profileKey and fingerprint key

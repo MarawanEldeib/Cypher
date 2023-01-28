@@ -36,17 +36,6 @@ class _ProfileListPageState extends State<ProfileListPage> {
     profileRef.remove();
   }
 
-  void _addFingerprint(int fingerprint) async {
-    // Generate a unique key for the new fingerprint node
-    DatabaseReference fingerprintRef = databaseRef
-        .child(user.uid)
-        .child('profiles')
-        .child(selectedProfileKey)
-        .child('fingerprints')
-        .push();
-    // Use the generated key to set the value of the fingerprint id
-    fingerprintRef.set(fingerprint);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -139,52 +128,11 @@ class _ProfileListPageState extends State<ProfileListPage> {
                                     value: 'delete',
                                     child: Text('Delete'),
                                   ),
-                                  PopupMenuItem(
-                                    value: 'add_fingerprint',
-                                    child: Text('Add Fingerprint'),
-                                  ),
                                 ],
                                 onSelected: (value) {
                                   if (value == 'delete') {
                                     // Pass the profile key to the _deleteProfile method
                                     _deleteProfile(key);
-                                  } else if (value == 'add_fingerprint') {
-                                    // Show a dialog to enter the fingerprint value
-                                    showDialog(
-                                      context: context,
-                                      builder: (BuildContext context) {
-                                        return AlertDialog(
-                                          title: Text('Add Fingerprint ID'),
-                                          content: TextField(
-                                            onChanged: (value) {
-                                              // Set the value of the entered fingerprint to a local variable
-                                              fingerprint = int.parse(value);
-                                            },
-                                            decoration: InputDecoration(
-                                              focusedBorder: OutlineInputBorder(
-                                                borderSide: BorderSide(
-                                                    color: Colors.lightGreen),
-                                              ),
-                                              border: OutlineInputBorder(),
-                                              labelText: 'Enter Fingerprint ID',
-                                              labelStyle: TextStyle(
-                                                  color: Colors.black),
-                                            ),
-                                          ),
-                                          actions: [
-                                            ElevatedButton(
-                                              child: Text('Add'),
-                                              onPressed: () {
-                                                // Pass the profile key and fingerprint value to the _addFingerprint method
-                                                selectedProfileKey = key;
-                                                _addFingerprint(fingerprint!);
-                                                Navigator.of(context).pop();
-                                              },
-                                            ),
-                                          ],
-                                        );
-                                      },
-                                    );
                                   }
                                 },
                               ),

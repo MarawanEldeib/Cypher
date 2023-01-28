@@ -29,6 +29,7 @@ dependencies:
   flutter_secure_storage: ^7.0.1
   open_settings: ^2.0.2
   flutter_local_notifications: ^13.0.0
+  awesome_notifications: ^0.7.4+1
 
 
 dev_dependencies:

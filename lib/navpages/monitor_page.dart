@@ -1,8 +1,8 @@
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 
-import '../main.dart';
 import 'noti.dart';
 
 class monitorpage extends StatefulWidget {
@@ -54,6 +54,8 @@ class _monitorpageState extends State<monitorpage> {
     }
   }
 
+
+
   void _activateListeners() {
     databaseRef
         .child(user.uid.toString())
@@ -84,10 +86,8 @@ class _monitorpageState extends State<monitorpage> {
         _motion = event.snapshot.value.toString().parseBool();
       });
       if (_motion == true) {
-        Noti.showBigTextNotification(
-            title: "Motion Detected",
-            body: "Someone at the front door",
-            fln: flutterLocalNotificationsPlugin,);
+// show notification when motion is detected
+        NotificationController.createNewNotification();
       }
     });
   }
