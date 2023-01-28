@@ -29,6 +29,26 @@ class _monitorpageState extends State<monitorpage> {
   bool _showError = false;
 
   void _unlockDoor() async {
+    if (_motion == false) {
+      showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('Failed'),
+            content: Text('Cannot unlock door because no motion detected.'),
+            actions: <Widget>[
+              TextButton(
+                child: Text('OK'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
+      return;
+    }
     try {
       // update the status of door in firebase
       _doorLocked = false;
@@ -40,6 +60,7 @@ class _monitorpageState extends State<monitorpage> {
       print(e);
     }
   }
+
 
   void _lockDoor() async {
     try {
