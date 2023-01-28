@@ -18,7 +18,7 @@ class _mainpageState extends State<mainpage> {
   List pages = [
     monitorpage(),
     ProfileListPage(),
-    historypage(),
+    HistoryPage(),
     settingspage(),
   ];
   int currentIndex = 0;
