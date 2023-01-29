@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:quickalert/models/quickalert_type.dart';
 import 'package:quickalert/widgets/quickalert_dialog.dart';
 import 'constants.dart';
@@ -24,6 +25,7 @@ class _LoginWidgetState extends State<LoginWidget> {
   bool _isSaved = false;
   late String _email;
   late String _password;
+  bool _obscureText = true;
 
   @override
   void initState() {
@@ -31,9 +33,9 @@ class _LoginWidgetState extends State<LoginWidget> {
     _checkSavedCredentials();
     auth.isDeviceSupported().then(
           (bool isSupported) => setState(() => _supportState = isSupported
-          ? _SupportState.supported
-          : _SupportState.unsupported),
-    );
+              ? _SupportState.supported
+              : _SupportState.unsupported),
+        );
   }
 
   Future<void> _saveCredentials() async {
@@ -78,14 +80,13 @@ class _LoginWidgetState extends State<LoginWidget> {
     if (!mounted) {
       return;
     }
-    if(_isSaved && authenticated) {
+    if (_isSaved && authenticated) {
       _emailController.text = _email;
       _passwordController.text = _password;
     }
-    setState(() => _authorized = authenticated ? 'Authorized' : 'Not Authorized');
+    setState(
+        () => _authorized = authenticated ? 'Authorized' : 'Not Authorized');
   }
-
-
 
   Future signIn() async {
     showDialog(
@@ -93,7 +94,9 @@ class _LoginWidgetState extends State<LoginWidget> {
         barrierDismissible: false,
         builder: (context) {
           return const Center(
-            child: CircularProgressIndicator(),
+            child: SpinKitFadingFour(
+              color: appcolortheme,
+            ),
           );
         });
     try {
@@ -104,7 +107,9 @@ class _LoginWidgetState extends State<LoginWidget> {
       Navigator.pop(context);
     } on FirebaseAuthException catch (e) {
       print(e);
-      if (e.code == 'user-not-found' || e.code == 'wrong-password' || e.code == 'invalid-email') {
+      if (e.code == 'user-not-found' ||
+          e.code == 'wrong-password' ||
+          e.code == 'invalid-email') {
         Navigator.pop(context);
         return QuickAlert.show(
           context: context,
@@ -117,7 +122,7 @@ class _LoginWidgetState extends State<LoginWidget> {
           confirmBtnColor: kBottomContainerColor,
           confirmBtnText: 'OK',
         );
-      } else if ( e.code == 'unknown') {
+      } else if (e.code == 'unknown') {
         Navigator.pop(context);
         return QuickAlert.show(
           context: context,
@@ -134,28 +139,30 @@ class _LoginWidgetState extends State<LoginWidget> {
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData.dark().copyWith(
         appBarTheme: AppBarTheme(color: Color(0xFF242038)),
-        scaffoldBackgroundColor: Color(0xFF242038),
-        textTheme: TextTheme(bodyText2: TextStyle(color: Colors.white)),
+        scaffoldBackgroundColor: appcolortheme,
+        textTheme: TextTheme(bodyMedium: TextStyle(color: Colors.white)),
       ),
       home: Scaffold(
         resizeToAvoidBottomInset: false,
         body: Padding(
           padding: const EdgeInsets.all(15.0),
           child: SingleChildScrollView(
-          child: Column(
+            child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Center(
                   child: Container(
-                    child: Image.asset('assets/logo_foreground.png',height: 300,),
+                    child: Image.asset(
+                      'assets/logo_foreground.png',
+                      height: 300,
+                    ),
                   ),
                 ),
                 Text(
@@ -168,35 +175,58 @@ class _LoginWidgetState extends State<LoginWidget> {
                 Text(
                   'Please enter your credentials',
                 ),
-                SizedBox(height: 30,),
+                SizedBox(
+                  height: 30,
+                ),
                 Container(
                   child: TextField(
                     controller: _emailController,
-                    decoration: const InputDecoration(
+                    keyboardType: TextInputType.emailAddress,
+                    decoration:  InputDecoration(
                       focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white),
+                        borderSide: BorderSide(color: Colors.blue),
                       ),
                       border: OutlineInputBorder(),
+                      prefixIcon: Icon(Icons.email),
                       labelText: 'Email',
+                      suffixIcon: GestureDetector(
+                          onTap: () => _authenticate(),
+                      child: Icon(Icons.fingerprint,),),
                       labelStyle: kLabelTextStyle,
                     ),
                   ),
                 ),
-                SizedBox(height: 30,),
+                SizedBox(
+                  height: 30,
+                ),
                 Container(
                   child: TextField(
-                    obscureText: true,
+                    obscureText: _obscureText,
                     controller: _passwordController,
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                       focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.white)),
+                          borderSide: BorderSide(color: Colors.blue)),
                       border: OutlineInputBorder(),
+                      prefixIcon: Icon(Icons.vpn_key),
+                      suffixIcon: GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            _obscureText = !_obscureText;
+                          });
+                        },
+                        child: Icon(_obscureText
+                            ? Icons.visibility
+                            : Icons.visibility_off),
+                      ),
+                      suffixIconColor: _obscureText ? Colors.green : Colors.red,
                       labelText: 'Password',
                       labelStyle: kLabelTextStyle,
                     ),
                   ),
                 ),
-                SizedBox(height: 30,),
+                SizedBox(
+                  height: 30,
+                ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 1.0),
                   child: GestureDetector(
@@ -217,29 +247,8 @@ class _LoginWidgetState extends State<LoginWidget> {
                     ),
                   ),
                 ),
-                SizedBox(height: 30),
-                Center(child: Text('             OR \n \n Use Biometrics',style: TextStyle(fontWeight: FontWeight.bold),)),
-                SizedBox(height: 20),
-                 Center(
-                   child: GestureDetector(
-                      onTap: () =>  _authenticate(),
-                      child: Container(
-                        width: 200.0,
-                        height: 50.0,
-                        decoration: BoxDecoration(
-                          color: Colors.transparent,
-                        ),
-                        child: Icon(
-                          Icons.fingerprint,
-                          color: Colors.white,
-                          size: 70.0,
-                        ),
-                      ),
-                    ),
-                 ),
               ],
             ),
-
           ),
         ),
       ),
@@ -247,12 +256,8 @@ class _LoginWidgetState extends State<LoginWidget> {
   }
 }
 
-
 enum _SupportState {
   unknown,
   supported,
   unsupported,
 }
-
-
-

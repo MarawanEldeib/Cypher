@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
+import '../widget/constants.dart';
 import 'FingerprintPage.dart';
 
 class ProfileListPage extends StatefulWidget {
@@ -42,6 +44,7 @@ class _ProfileListPageState extends State<ProfileListPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('User Profiles'),
+        backgroundColor: appcolortheme,
         actions: [
           IconButton(
             icon: Icon(Icons.add),
@@ -86,7 +89,9 @@ class _ProfileListPageState extends State<ProfileListPage> {
         stream: databaseRef.child(user.uid).child('profiles').onValue,
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
-            return Center(child: CircularProgressIndicator());
+            return Center(child: SpinKitFadingFour(
+              color: appcolortheme,
+            ));
           }
           if (snapshot.data!.snapshot.value is Map) {
             return ListView.builder(

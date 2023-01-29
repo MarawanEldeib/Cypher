@@ -22,3 +22,5 @@ const kLabelTextStyle = TextStyle(
   fontSize: 16.0,
   color: Color(0xFFFFFFFF),
 );
+
+const appcolortheme =  Color(0xFF242038);

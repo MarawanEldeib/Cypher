@@ -1,6 +1,8 @@
+import 'package:cypherflutter/widget/constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:intl/intl.dart';
 
 class HistoryPage extends StatefulWidget {
@@ -68,14 +70,15 @@ class _HistoryPageState extends State<HistoryPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('History'),
+        backgroundColor: appcolortheme,
       ),
       body: StreamBuilder<DatabaseEvent>(
         stream: databaseRef.child(user.uid).child("history").onValue,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(
-              child: Text("Checking for history..."),
-            );
+            return Center(child: SpinKitFadingFour(
+              color: appcolortheme,
+            ));
           }
           if (snapshot.hasData && snapshot.data?.snapshot.value != null) {
             final List history = (snapshot.data?.snapshot.value as Map<dynamic, dynamic>).values.toList();

@@ -1,7 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import '../widget/AddFingerprintDialog.dart';
+import '../widget/constants.dart';
 import 'FingerprintStepper.dart';
 
 class FingerprintPage extends StatefulWidget {
@@ -73,6 +75,7 @@ class _FingerprintPageState extends State<FingerprintPage> {
     DatabaseReference fingerprintRef = fingerprintsRef.push();
     // Use the generated key to set the value of the fingerprint id
     fingerprintRef.set(fingerprint);
+    databaseRef.child(user.uid).child("id").set(fingerprint);
     var fingerprintKey = fingerprintRef.key;
     callback(fingerprintKey);
   }
@@ -122,6 +125,7 @@ class _FingerprintPageState extends State<FingerprintPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Fingerprints'),
+        backgroundColor: appcolortheme,
         actions: [
           IconButton(
             icon: Icon(Icons.fingerprint),
@@ -233,9 +237,9 @@ class _FingerprintPageState extends State<FingerprintPage> {
                 );
               }
             } else {
-              return Center(
-                child: CircularProgressIndicator(),
-              );
+              return Center(child: SpinKitFadingFour(
+                color: appcolortheme,
+              ));
             }
           },
         ),

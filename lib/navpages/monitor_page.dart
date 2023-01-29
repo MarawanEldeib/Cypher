@@ -1,8 +1,8 @@
-import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
-
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import '../widget/constants.dart';
 import 'noti.dart';
 
 class monitorpage extends StatefulWidget {
@@ -61,7 +61,6 @@ class _monitorpageState extends State<monitorpage> {
     }
   }
 
-
   void _lockDoor() async {
     try {
       // update the status of door in firebase
@@ -74,8 +73,6 @@ class _monitorpageState extends State<monitorpage> {
       print(e);
     }
   }
-
-
 
   void _activateListeners() {
     databaseRef
@@ -124,37 +121,16 @@ class _monitorpageState extends State<monitorpage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Monitor Page'),
+        backgroundColor: appcolortheme,
       ),
       body: SafeArea(
         child: _distance == null || _doorLocked == null
-            ? Center(child: CircularProgressIndicator())
+            ? Center(child: SpinKitFadingFour(
+          color: appcolortheme,
+        ))
             : Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Container(
-                    padding: EdgeInsets.all(20),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Main account:',
-                          style: TextStyle(
-                            fontSize: 20,
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        SizedBox(height: 10),
-                        Text(
-                          user.email.toString(),
-                          style: TextStyle(
-                            fontSize: 18,
-                            color: Colors.grey[600],
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
                   Container(
                     padding: EdgeInsets.all(20),
                     child: Column(

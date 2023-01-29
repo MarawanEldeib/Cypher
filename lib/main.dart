@@ -6,9 +6,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
 import 'navpages/noti.dart';
 
-
-
-
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -18,7 +15,6 @@ Future main() async {
   );
   runApp(MyApp());
 }
-
 
 final navigatorKey = GlobalKey<NavigatorState>();
 
@@ -32,9 +28,8 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   DatabaseReference databaseRef = FirebaseDatabase.instance.ref();
 
-
   @override
-  void initState(){
+  void initState() {
     super.initState();
   }
 
@@ -44,12 +39,9 @@ class _MyAppState extends State<MyApp> {
       //navigatorKey: navigatorKey,
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-       primarySwatch: Colors.blue,
+        primarySwatch: Colors.blue,
       ),
       home: mp(),
     );
   }
 }
-
-
-

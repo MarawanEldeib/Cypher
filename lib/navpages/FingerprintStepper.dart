@@ -3,6 +3,9 @@ import 'package:cypherflutter/navpages/profile_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+
+import '../widget/constants.dart';
 
 class FingerprintStepper extends StatefulWidget {
   final String profileKey;
@@ -59,6 +62,7 @@ class _FingerprintStepperState extends State<FingerprintStepper> {
       child: Scaffold(
         appBar: AppBar(
           title: Text('Setup fingerprint'),
+          backgroundColor: appcolortheme,
         ),
         body: StreamBuilder(
             stream: databaseRef.child(user.uid).child("steps").onValue,
@@ -67,7 +71,9 @@ class _FingerprintStepperState extends State<FingerprintStepper> {
                 var value = snapshot.data.snapshot.value;
                 if (value == null) {
                   print("value is null");
-                  return Center(child: CircularProgressIndicator());
+                  return Center(child: SpinKitFadingCircle(
+                    color: Colors.red,
+                  ));
                 }
                 try {
                   var step = int.parse(value.toString());
@@ -86,14 +92,20 @@ class _FingerprintStepperState extends State<FingerprintStepper> {
                       ),
                     );
                   } else {
-                    return Center(child: CircularProgressIndicator());
+                    return Center(child: SpinKitPouringHourGlassRefined(
+                      color: Color(0xFF242038),
+                    ));
                   }
                 } catch (e) {
                   print("Not able to parse value: $value to int");
-                  return Center(child: CircularProgressIndicator());
+                  return Center(child: SpinKitFadingCircle(
+                    color: Color(0xFF242038),
+                  ));
                 }
               } else {
-                return Center(child: CircularProgressIndicator());
+                return Center(child: SpinKitFadingFour(
+                  color: Color(0xFF242038),
+                ));
               }
             }),
       ),
