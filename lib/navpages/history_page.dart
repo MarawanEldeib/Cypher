@@ -15,7 +15,7 @@ class _HistoryPageState extends State<HistoryPage> {
   late String _profileName;
   late String _dateTime;
   int? _savedID;
-  bool _hasChecked = false;
+
 
   void _activateListeners() {
     // Listen for changes to the savedID value
@@ -33,9 +33,9 @@ class _HistoryPageState extends State<HistoryPage> {
       // If the history node does not exist, create it
       databaseRef.child(user.uid).child("history").set({});
     }
-
     // Check all fingerprints under all profiles until a match is found
-    final DataSnapshot snapshot = await databaseRef.child(user.uid).child("profiles").get();
+    final DataSnapshot snapshot =
+    await databaseRef.child(user.uid).child("profiles").get();
     final Map<dynamic, dynamic> profiles =
     (snapshot.value as Map<dynamic, dynamic>);
     for (final dynamic profile in profiles.values) {
@@ -70,27 +70,36 @@ class _HistoryPageState extends State<HistoryPage> {
         title: Text('History'),
       ),
       body: StreamBuilder<DatabaseEvent>(
-        stream:
-            databaseRef.child(user.uid).child("history").orderByKey().onValue,
+        stream: databaseRef.child(user.uid).child("history").onValue,
         builder: (context, snapshot) {
-          if (snapshot.hasData && snapshot.data?.snapshot.value != null) {
-            final Map<dynamic, dynamic> history =
-                (snapshot.data?.snapshot.value as Map<dynamic, dynamic>);
-            return ListView.builder(
-              itemCount: history.values.length,
-              itemBuilder: (context, index) {
-                final dynamic item = history.values.elementAt(index);
-                return ListTile(
-                  title: Text(item['profileName'] + ' came home'),
-                  subtitle: Text(item['dateTime']),
-                );
-              },
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(
+              child: Text("Checking for history..."),
             );
+          }
+          if (snapshot.hasData && snapshot.data?.snapshot.value != null) {
+            final List history = (snapshot.data?.snapshot.value as Map<dynamic, dynamic>).values.toList();
+            if(history.length > 0) {
+              history.sort((a, b) => b['dateTime'].compareTo(a['dateTime']));
+              return ListView.builder(
+                itemCount: history.length,
+                itemBuilder: (context, index) {
+                  final dynamic item = history[index];
+                  return ListTile(
+                    title: Text(item['profileName'] + ' came home'),
+                    subtitle: Text(item['dateTime']),
+                  );
+                },
+              );
+            }
+            else {
+              return Center(
+                child: Text("No history found"),
+              );
+            }
           } else {
             return Center(
-              child: Text(
-                _hasChecked ? "No history found" : "Checking for history...",
-              ),
+              child: Text("No history found"),
             );
           }
         },
