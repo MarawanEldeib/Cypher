@@ -38,7 +38,6 @@ class _ProfileListPageState extends State<ProfileListPage> {
     profileRef.remove();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -70,12 +69,13 @@ class _ProfileListPageState extends State<ProfileListPage> {
                     ),
                     actions: [
                       ElevatedButton(
-                        child: Text('Add'),
+                        child: Text('Create'),
                         onPressed: () {
                           // Pass the value of the entered name to the _addProfile method
                           _addProfile(name);
                           Navigator.of(context).pop();
                         },
+                        style: ButtonStyle(backgroundColor: MaterialStateProperty.all(appcolortheme)),
                       ),
                     ],
                   );
@@ -89,7 +89,8 @@ class _ProfileListPageState extends State<ProfileListPage> {
         stream: databaseRef.child(user.uid).child('profiles').onValue,
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
-            return Center(child: SpinKitFadingFour(
+            return Center(
+                child: SpinKitFadingFour(
               color: appcolortheme,
             ));
           }
@@ -119,59 +120,60 @@ class _ProfileListPageState extends State<ProfileListPage> {
                     child: Column(
                       children: [
                         Dismissible(
-                        key: UniqueKey(),
-                  direction: DismissDirection.endToStart,
-                  onDismissed: (direction) {
-                    // Show a confirmation dialog before deleting the profile
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                          title: Text("Confirm deletion"),
-                          content: Text("Are you sure you want to delete this profile?"),
-                          actions: <Widget>[
-                            TextButton(
-                              child: Text("Cancel"),
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                                setState(() {});
+                          key: UniqueKey(),
+                          direction: DismissDirection.endToStart,
+                          onDismissed: (direction) {
+                            // Show a confirmation dialog before deleting the profile
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: Text("Confirm deletion"),
+                                  content: Text(
+                                      "Are you sure you want to delete this profile?"),
+                                  actions: <Widget>[
+                                    TextButton(
+                                      child: Text("Cancel"),
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                        setState(() {});
+                                      },
+                                    ),
+                                    TextButton(
+                                      child: Text("Delete", style: TextStyle(color: Colors.red),),
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                        _deleteProfile(key);
+                                      },
+                                    ),
+                                  ],
+                                );
                               },
-                            ),
-                            TextButton(
-                              child: Text("Delete"),
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                                _deleteProfile(key);
-                              },
-                            ),
-                          ],
-                        );
-                      },
-                    );
-                  },
-                  background: Container(color: Colors.red),
-                  secondaryBackground: Container(
-                    color: Colors.red,
-                    child: Align(
-                        alignment: Alignment.centerRight,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: <Widget>[
-                            Icon(Icons.delete),
-                            Text("Deleting...")
-                          ],
-                        )),
-                  ),
-                  child: ListTile(
-                    title: Text(name),
-                    subtitle: ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: fingerprints.length,
-                        itemBuilder: (context, index) {
-                          return Text(fingerprints[index]);
-                        }),
-                  ),
-                )
+                            );
+                          },
+                          background: Container(color: Colors.red),
+                          secondaryBackground: Container(
+                            color: Colors.red,
+                            child: Align(
+                                alignment: Alignment.centerRight,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: <Widget>[
+                                    Icon(Icons.delete),
+                                    Text("Deleting...")
+                                  ],
+                                )),
+                          ),
+                          child: ListTile(
+                            title: Text(name),
+                            subtitle: ListView.builder(
+                                shrinkWrap: true,
+                                itemCount: fingerprints.length,
+                                itemBuilder: (context, index) {
+                                  return Text(fingerprints[index]);
+                                }),
+                          ),
+                        )
                       ],
                     ));
               },

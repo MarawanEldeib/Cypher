@@ -195,7 +195,7 @@ class _FingerprintPageState extends State<FingerprintPage> {
                                     },
                                   ),
                                   TextButton(
-                                    child: Text("Delete"),
+                                    child: Text("Delete",style: TextStyle(color: Colors.red)),
                                     onPressed: () {
                                       Navigator.of(context).pop();
                                       _deleteFingerprint(widget.profileKey,

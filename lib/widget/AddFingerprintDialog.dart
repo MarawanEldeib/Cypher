@@ -66,7 +66,7 @@ class _AddFingerprintDialogState extends State<AddFingerprintDialog> {
             },
           ),
           TextButton(
-            child: Text('Add'),
+            child: Text('Add',style: TextStyle(color: Colors.green),),
             onPressed: () {
               if (_fingerprintId != null) {
                 Navigator.of(context).pop(_fingerprintId);

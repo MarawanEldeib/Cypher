@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:open_settings/open_settings.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../widget/WiFiSettingsPage.dart';
 import '../widget/constants.dart';
 
 class settingspage extends StatefulWidget {
@@ -34,7 +35,7 @@ class _settingspageState extends State<settingspage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Main account:',
+                      'Account:',
                       style: TextStyle(
                         fontSize: 20,
                         color: Colors.black,
@@ -52,43 +53,45 @@ class _settingspageState extends State<settingspage> {
                   ],
                 ),
               ),
-              ElevatedButton.icon(
-                style: ElevatedButton.styleFrom(
-                    minimumSize: Size.fromHeight(50),
-                    backgroundColor: Colors.green),
-                icon: Icon(Icons.logout, size: 32),
-                label: Text(
-                  'Sign Out',
-                  style: TextStyle(fontSize: 24),
+              Card(
+                child: ListTile(
+                  leading: Icon(Icons.wifi_protected_setup_rounded),
+                  title: Text("Wi-Fi Connection"),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => WiFiSettingsPage()),
+                    );
+                  },
                 ),
-                onPressed: () => FirebaseAuth.instance.signOut(),
+              ),
+
+              SizedBox(height: 30),
+              Card(
+                child: ListTile(
+                  leading: Icon(Icons.phone, color: Colors.red),
+                  title: Text('Emergency Call',
+                      style: TextStyle(color: Colors.red)),
+                  onTap: () async {
+                    var url = Uri.parse("tel:999");
+                    if (await canLaunchUrl(url)) {
+                      await launchUrl(url);
+                    } else {
+                      throw 'Could not launch $url';
+                    }
+                  },
+                ),
               ),
               SizedBox(height: 30),
-              ElevatedButton.icon(
-                style: ElevatedButton.styleFrom(
-                    minimumSize: Size.fromHeight(50),
-                    backgroundColor: Colors.pink),
-                onPressed: () {
-                  OpenSettings.openWIFISetting();
-                },
-                icon: Icon(Icons.wifi),
-                label: Text('Wi-fi Settings'),
-              ),
-              SizedBox(height: 30,),
-              ElevatedButton.icon(
-                style: ElevatedButton.styleFrom(
-                    minimumSize: Size.fromHeight(50),
-                    backgroundColor: Colors.red),
-                onPressed: () async {
-                  var url = Uri.parse("tel:999");
-                  if (await canLaunchUrl(url)) {
-                    await launchUrl(url);
-                  } else {
-                    throw 'Could not launch $url';
-                  }
-                },
-                icon: Icon(Icons.phone),
-                label: Text('Emergency Call'),
+              Card(
+                child: ListTile(
+                  leading: Icon(Icons.logout, color: Colors.green, size: 32),
+                  title: Text(
+                    'Sign Out',
+                    style: TextStyle(color: Colors.green, fontSize: 24),
+                  ),
+                  onTap: () => FirebaseAuth.instance.signOut(),
+                ),
               ),
             ],
           )),

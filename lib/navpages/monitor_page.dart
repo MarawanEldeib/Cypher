@@ -141,7 +141,9 @@ class _monitorpageState extends State<monitorpage> {
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
                                 Image.asset(
-                                  _doorLocked == true ? 'assets/doorlocked.png' : 'assets/door.png',
+                                  _doorLocked == true
+                                      ? 'assets/doorlocked.png'
+                                      : 'assets/door.png',
                                   height: 100,
                                 ),
                                 SizedBox(width: 20),
@@ -152,16 +154,18 @@ class _monitorpageState extends State<monitorpage> {
                                         WidgetSpan(
                                           child: _doorLocked ?? false
                                               ? Icon(
-                                            Icons.lock,
-                                            color: Colors.white,
-                                          )
+                                                  Icons.lock,
+                                                  color: Colors.white,
+                                                )
                                               : Icon(
-                                            Icons.lock_open,
-                                            color: Colors.white,
-                                          ),
+                                                  Icons.lock_open,
+                                                  color: Colors.white,
+                                                ),
                                         ),
                                         TextSpan(
-                                          text: _doorLocked ?? false ? ' Unlock' : ' Lock',
+                                          text: _doorLocked ?? false
+                                              ? ' Unlock'
+                                              : ' Lock',
                                           style: TextStyle(
                                             color: Colors.white,
                                             fontSize: 25,
@@ -176,7 +180,9 @@ class _monitorpageState extends State<monitorpage> {
                                         ? Colors.lightGreen
                                         : Colors.red,
                                   ),
-                                  onPressed: _doorLocked ?? false ? _unlockDoor : _lockDoor,
+                                  onPressed: _doorLocked ?? false
+                                      ? _unlockDoor
+                                      : _lockDoor,
                                 ),
                               ],
                             ),
@@ -184,7 +190,9 @@ class _monitorpageState extends State<monitorpage> {
                             Row(
                               children: [
                                 Text(
-                                  (_doorLocked == true ? '        Locked' : '        Unlocked'),
+                                  (_doorLocked == true
+                                      ? '        Locked'
+                                      : '        Unlocked'),
                                   style: TextStyle(
                                     fontSize: 20,
                                     color: appcolortheme,
@@ -212,101 +220,96 @@ class _monitorpageState extends State<monitorpage> {
                       height: 20,
                     ),
                     Card(
-                        child: Column(
-                            children: [
-                              Container(
-                                width: 390,
-                                height: 120,
-                                child: Padding(
-                                  padding: EdgeInsets.all(20),
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      border: Border.all(
-                                        color: appcolortheme,
-                                        width: 2,
-                                      ),
-                                      borderRadius: BorderRadius.circular(30),
-                                    ),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                      children: <Widget>[
-                                        Container(
-                                          margin: EdgeInsets.only(left: 20),
-                                          width: 75,
-                                          height: 75,
-                                          child: Image.asset(
-                                            'assets/motion.png',
-                                            width: 100,
-                                            height: 100,
-                                            fit: BoxFit.cover,
-                                          ),
-                                        ),
-                                        Container(
-                                          width: 200,
-                                          height: 150,
-                                          child: Column(
-                                            mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                            crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                            children: <Widget>[
-                                              Text(
-                                                'Motion:',
-                                                style: TextStyle(
-                                                  fontSize: 20,
-                                                  color: appcolortheme,
-                                                  fontWeight: FontWeight.bold,
-                                                ),
-                                              ),
-                                              Text(
-                                                _motion != null && _motion!
-                                                    ? 'Detected'
-                                                    : 'Not Detected',
-                                                style: TextStyle(
-                                                  fontSize: 20,
-                                                  color: _motion != null && _motion!
-                                                      ? Colors.red
-                                                      : Colors.green,
-                                                  fontWeight: FontWeight.bold,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
+                        child: Column(children: [
+                      Container(
+                        width: 390,
+                        height: 120,
+                        child: Padding(
+                          padding: EdgeInsets.all(20),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: appcolortheme,
+                                width: 2,
                               ),
-                              Padding(
-                                padding: const EdgeInsets.all(20.0),
-                                child: Visibility(
-                                  visible: _motion ?? false,
-                                  child: Container(
-                                    padding: EdgeInsets.all(20),
-                                    decoration: BoxDecoration(
-                                      color: appcolortheme,
-                                      borderRadius: BorderRadius.circular(17),
-                                      border:
-                                      Border.all(width: 2, color: appcolortheme),
-                                    ),
-                                    child: Text(
-                                      'Object Distance: ' +
-                                          _distance.toString() +
-                                          ' cm',
-                                      style: TextStyle(
-                                        fontSize: 20,
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                Container(
+                                  margin: EdgeInsets.only(left: 20),
+                                  width: 75,
+                                  height: 75,
+                                  child: Image.asset(
+                                    'assets/motion.png',
+                                    width: 100,
+                                    height: 100,
+                                    fit: BoxFit.cover,
                                   ),
                                 ),
-                              )
-                            ]
-                        )
-                    )
+                                Container(
+                                  width: 200,
+                                  height: 150,
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: <Widget>[
+                                      Text(
+                                        'Motion:',
+                                        style: TextStyle(
+                                          fontSize: 20,
+                                          color: appcolortheme,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      Text(
+                                        _motion != null && _motion!
+                                            ? 'Detected'
+                                            : 'Not Detected',
+                                        style: TextStyle(
+                                          fontSize: 20,
+                                          color: _motion != null && _motion!
+                                              ? Colors.red
+                                              : Colors.green,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(20.0),
+                        child: Visibility(
+                          visible: _motion ?? false,
+                          child: Container(
+                            padding: EdgeInsets.all(20),
+                            decoration: BoxDecoration(
+                              color: appcolortheme,
+                              borderRadius: BorderRadius.circular(17),
+                              border:
+                                  Border.all(width: 2, color: appcolortheme),
+                            ),
+                            child: Text(
+                              'Object Distance: ' +
+                                  _distance.toString() +
+                                  ' cm',
+                              style: TextStyle(
+                                fontSize: 20,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
+                      )
+                    ]))
                   ],
                 ),
         ),
