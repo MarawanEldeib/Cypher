@@ -104,6 +104,7 @@ class _LoginWidgetState extends State<LoginWidget> {
         email: _emailController.text.trim(),
         password: _passwordController.text.trim(),
       );
+      await _saveCredentials();
       Navigator.pop(context);
     } on FirebaseAuthException catch (e) {
       print(e);
