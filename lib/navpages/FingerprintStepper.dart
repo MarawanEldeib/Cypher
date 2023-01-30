@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:lottie/lottie.dart';
 
 import '../widget/constants.dart';
 
@@ -71,7 +72,8 @@ class _FingerprintStepperState extends State<FingerprintStepper> {
                 var value = snapshot.data.snapshot.value;
                 if (value == null) {
                   print("value is null");
-                  return Center(child: SpinKitFadingCircle(
+                  return Center(
+                      child: SpinKitFadingCircle(
                     color: Colors.red,
                   ));
                 }
@@ -92,19 +94,29 @@ class _FingerprintStepperState extends State<FingerprintStepper> {
                       ),
                     );
                   } else {
-                    return Center(child: SpinKitPouringHourGlassRefined(
-                      color: Color(0xFF242038),
-                    ));
+                    return Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: <Widget>[
+                          SizedBox(height: 60,),
+                          Lottie.asset('assets/stepper.json'),
+                          Text("Please Wait...", style: TextStyle(fontSize: 30),),
+                        ],
+                      ),
+                    );
+
                   }
                 } catch (e) {
                   print("Not able to parse value: $value to int");
-                  return Center(child: SpinKitFadingCircle(
-                    color: Color(0xFF242038),
+                  return Center(
+                      child: SpinKitFadingCircle(
+                    color: appcolortheme,
                   ));
                 }
               } else {
-                return Center(child: SpinKitFadingFour(
-                  color: Color(0xFF242038),
+                return Center(
+                    child: SpinKitFadingFour(
+                  color: appcolortheme,
                 ));
               }
             }),
@@ -159,7 +171,8 @@ class _FingerprintStepperState extends State<FingerprintStepper> {
                                       Navigator.pop(context);
                                       if (_isOptionChanged) {
                                         _changeOptionBack(selectedProfileKey);
-                                      };
+                                      }
+                                      ;
                                     },
                                     child: Text("OK"))
                               ],

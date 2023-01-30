@@ -4,6 +4,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:intl/intl.dart';
+import 'package:lottie/lottie.dart';
 
 class HistoryPage extends StatefulWidget {
   @override
@@ -63,6 +64,7 @@ class _HistoryPageState extends State<HistoryPage> {
   @override
   void initState() {
     super.initState();
+    _activateListeners;
   }
 
   @override
@@ -97,12 +99,23 @@ class _HistoryPageState extends State<HistoryPage> {
             }
             else {
               return Center(
-                child: Text("No history found"),
+                child: SpinKitPouringHourGlassRefined(
+                  color: appcolortheme,
+                )
               );
             }
           } else {
             return Center(
-              child: Text("No history found"),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  SizedBox(height: 190,),
+                  Lottie.asset('assets/nohistory.json'),
+                  SizedBox(height: 20,),
+                  Text("No history yet", style: TextStyle(fontSize: 25),),
+                ],
+              ),
             );
           }
         },

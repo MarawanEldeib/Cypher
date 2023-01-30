@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:lottie/lottie.dart';
 import '../widget/AddFingerprintDialog.dart';
 import '../widget/constants.dart';
 import 'FingerprintStepper.dart';
@@ -228,12 +229,24 @@ class _FingerprintPageState extends State<FingerprintPage> {
                   );
                 } else {
                   return Center(
-                    child: Text('No fingerprints saved'),
+                        child: SpinKitPouringHourGlassRefined(
+                          color: appcolortheme,
+                        )
                   );
                 }
               } else {
                 return Center(
-                  child: Text('No fingerprints saved'),
+                  child: SingleChildScrollView (
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        Lottie.asset('assets/nofingerprints.json'),
+                        SizedBox(height: 30,),
+                        Text("No Fingerprints Saved", style: TextStyle(fontSize: 25),),
+                      ],
+                    ),
+                  ),
                 );
               }
             } else {
