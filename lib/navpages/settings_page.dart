@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
-import 'package:open_settings/open_settings.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../widget/WiFiSettingsPage.dart';
@@ -16,6 +15,7 @@ class settingspage extends StatefulWidget {
 
 class _settingspageState extends State<settingspage> {
   final user = FirebaseAuth.instance.currentUser!;
+
 
   @override
   Widget build(BuildContext context) {
@@ -60,12 +60,12 @@ class _settingspageState extends State<settingspage> {
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => WiFiSettingsPage()),
+                      MaterialPageRoute(
+                          builder: (context) => WiFiSettingsPage()),
                     );
                   },
                 ),
               ),
-
               SizedBox(height: 30),
               Card(
                 child: ListTile(

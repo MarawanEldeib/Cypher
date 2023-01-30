@@ -64,7 +64,7 @@ class _HistoryPageState extends State<HistoryPage> {
   @override
   void initState() {
     super.initState();
-    _activateListeners;
+    //_activateListeners();
   }
 
   @override
