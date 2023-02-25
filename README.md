@@ -15,7 +15,6 @@ Smart IOT Based Door Lock System using flutter application.
 ![from arduino connection to internet via server](https://user-images.githubusercontent.com/105850133/221357071-11d8b7cb-c41b-41ae-b988-da654fb51d85.jpg)
 
 ![Main flow chart](https://user-images.githubusercontent.com/105850133/221357025-96593c11-108c-4216-aac8-47f311b5ed72.png)
-![flowchart](https://user-images.githubusercontent.com/105850133/221357075-b9a514f9-ed7e-4bab-b8b0-c257bd101840.png)
 
 ![LOGIN PAGE](https://user-images.githubusercontent.com/105850133/221357028-d018f542-6bb2-4dc6-9374-3fecc7a85372.png)
 
